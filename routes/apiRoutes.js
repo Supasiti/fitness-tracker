@@ -36,7 +36,7 @@ const addExercise = async (req, res) => {
 // create a new workout
 const createWorkout = async (req, res) => {
   try {
-    const workout = await services.workout.create();
+    const workout = await services.workout.create(req.body);
     res.json(workout);
   } catch (err) {
     console.error(err);
