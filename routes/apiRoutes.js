@@ -4,6 +4,7 @@ const services = require('../services');
 
 // route : /api/
 
+// get all workouts
 const getWorkouts = async (req, res) => {
   try {
     const workouts = await query.getWorkouts();
@@ -14,6 +15,7 @@ const getWorkouts = async (req, res) => {
   }
 };
 
+// add an exercise to a workout
 const addExercise = async (req, res) => {
   try {
     const isSuccessful = await services.addExercise(
@@ -31,8 +33,19 @@ const addExercise = async (req, res) => {
   }
 };
 
+// create a new workout
+const createWorkout = async (req, res) => {
+  try {
+    const workout = await services.workout.create();
+    res.json(workout);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+};
+
 router.get('/workouts', getWorkouts);
 router.put('/workouts/:id', addExercise);
-// router.post('/workouts', createWorkout);
+router.post('/workouts', createWorkout);
 
 module.exports = router;
