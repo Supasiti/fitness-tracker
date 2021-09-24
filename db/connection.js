@@ -1,14 +1,16 @@
-const mongoose = require("mongoose");
+require('dotenv').config();
+const mongoose = require('mongoose');
 
-const url = "mongodb://localhost:27017/workout";
+const url =
+  process.env.MONGODB_URI || 'mongodb://localhost:27017/workout';
 const db = mongoose.connection;
 
-db.once("open", () => {
-  console.log("Database connected:", url);
+db.once('open', () => {
+  console.log('Database connected');
 });
 
 const connectDB = async () => {
-  await mongoose.connect(process.env.MONGODB_URI || url, {
+  await mongoose.connect(url, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
