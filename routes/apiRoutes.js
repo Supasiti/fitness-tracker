@@ -44,8 +44,19 @@ const createWorkout = async (req, res) => {
   }
 };
 
+const getWorkoutsInRange = async (req, res) => {
+  try {
+    const workouts = await query.getLastSevenWorkouts();
+    res.json(workouts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+};
+
 router.get('/workouts', getWorkouts);
 router.put('/workouts/:id', addExercise);
 router.post('/workouts', createWorkout);
+router.get('/workouts/range', getWorkoutsInRange);
 
 module.exports = router;

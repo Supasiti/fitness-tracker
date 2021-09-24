@@ -7,4 +7,18 @@ const getWorkouts = async () => {
   return result;
 };
 
-module.exports = { getWorkouts };
+const getLastSevenWorkouts = async () => {
+  const result = await db.Workout.aggregate()
+    .sort({ day: 'desc' })
+    .limit(7)
+    .addFields({
+      totalDuration: { $sum: '$exercises.duration' },
+    })
+    .catch(console.error);
+  return result;
+};
+
+module.exports = {
+  getWorkouts,
+  getLastSevenWorkouts,
+};
