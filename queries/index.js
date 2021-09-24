@@ -1,24 +1,17 @@
 const db = require('../models');
 
-const getWorkouts = async () => {
-  const result = await db.Workout.find({})
-    .lean()
-    .catch(console.error);
-  return result;
-};
-
-const getLastSevenWorkouts = async () => {
-  const result = await db.Workout.aggregate()
+const getWorkouts = async (limit) => {
+  const workouts = await db.Workout.aggregate()
     .sort({ day: 'desc' })
-    .limit(7)
+    .limit(limit)
     .addFields({
       totalDuration: { $sum: '$exercises.duration' },
     })
     .catch(console.error);
+  const result = workouts.reverse();
   return result;
 };
 
 module.exports = {
   getWorkouts,
-  getLastSevenWorkouts,
 };

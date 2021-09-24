@@ -7,7 +7,7 @@ const services = require('../services');
 // get all workouts
 const getWorkouts = async (req, res) => {
   try {
-    const workouts = await query.getWorkouts();
+    const workouts = await query.getWorkouts(10);
     res.json(workouts);
   } catch (err) {
     console.error(err);
@@ -46,7 +46,7 @@ const createWorkout = async (req, res) => {
 
 const getWorkoutsInRange = async (req, res) => {
   try {
-    const workouts = await query.getLastSevenWorkouts();
+    const workouts = await query.getWorkouts(7);
     res.json(workouts);
   } catch (err) {
     console.error(err);
